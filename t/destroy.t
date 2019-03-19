@@ -7,10 +7,10 @@ use lib "tlib";
 use Test::More;
 use t::Util;
 
-use B::Hooks::AtRuntime;
+use B::Hooks::AtRuntime::Lite;
 
 for my $wh (0, 1) {
-    my $cl = "closed-over values in " . 
+    my $cl = "closed-over values in " .
         ($wh ? "after_runtime" : "at_runtime");
 
     {
@@ -21,12 +21,12 @@ for my $wh (0, 1) {
                 "require is running";
             1;
         };
-        
+
         is_deeply \@::D, ["req"],
             "$cl in require freed when require ends";
     }
 
-    unless (B::Hooks::AtRuntime::USE_FILTER) {
+    unless (0) {
         @::D = ();
         eval q{
             use t::D "eval", $wh;
@@ -50,7 +50,7 @@ for my $wh (0, 1) {
         ok !@::D,   "$cl in a named sub remain while the sub exists";
 
         undef &{"sub_undef"};
-        is_deeply \@::D, ["undef"],      
+        is_deeply \@::D, ["undef"],
             "$cl in a named sub freed when the sub is undefed";
     }
 
@@ -147,7 +147,7 @@ for my $wh (0, 1) {
         undef &anonsub_ref;
         ok !grep($_ eq "anonsub ref", @::D),
             "$cl in anon sub persist while instances exist";
-        
+
         undef $cv;
         ok grep($_ eq "anonsub ref", @::D),
             "$cl in anon sub freed when last instance freed";

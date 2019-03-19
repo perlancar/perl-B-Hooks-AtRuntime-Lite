@@ -8,7 +8,7 @@ use Test::More;
 use Test::Exception;
 use Test::Warn;
 
-use B::Hooks::AtRuntime;
+use B::Hooks::AtRuntime::Lite;
 
 # Use a fresh lexical each time, just to make sure tests don't interfere
 # with each other.
@@ -19,7 +19,7 @@ use B::Hooks::AtRuntime;
     BEGIN { at_runtime { push @record, 2 } }
     push @record, 3;
 
-    is_deeply \@record, [1..3], "at_runtime lowers to runtime";
+    is_deeply \@record, [1..3], "at_runtime lowers to runtime" or diag explain \@record;
 }
 
 {
@@ -45,8 +45,6 @@ use B::Hooks::AtRuntime;
 }
 
 SKIP: {
-    skip "No eval{} with USE_FILTER", 1 if B::Hooks::AtRuntime::USE_FILTER;
-
     my @record;
     push @record, 4;
     BEGIN {
@@ -84,8 +82,8 @@ sub call_ar {
         package t::Use;
         $INC{"t/Use.pm"} = __FILE__;
 
-        use B::Hooks::AtRuntime;
-        sub import { 
+        use B::Hooks::AtRuntime::Lite;
+        sub import {
             my (undef, $item) = @_;
             at_runtime { push @record, $item };
         }
@@ -119,7 +117,7 @@ sub call_ar {
         push @record, 3*$x + 2;
     }
 
-    is_deeply \@record, [qw/0 1 2 3 1 5 6 1 8/], 
+    is_deeply \@record, [qw/0 1 2 3 1 5 6 1 8/],
                                 "a_r not reevaluated in loop";
 }
 
@@ -147,7 +145,7 @@ sub call_ar {
     }
     reeval $_ for 0..2;
 
-    is_deeply \@record, [qw/0 1 2 3 1 5 6 1 8/], 
+    is_deeply \@record, [qw/0 1 2 3 1 5 6 1 8/],
                                 "a_r not reevaluated in sub";
 }
 

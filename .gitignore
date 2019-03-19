@@ -1,8 +1,10 @@
+B-Hooks-AtRuntime-Lite-*
+.build
+*~
+nytprof*
 Build
 _build
+MYMETA.*
 blib
-*.bak
 *.c
 *.o
-MYMETA.*
-B-Hooks-AtRuntime-*

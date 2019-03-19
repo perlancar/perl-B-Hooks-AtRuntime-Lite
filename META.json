@@ -1,7 +1,7 @@
 {
    "abstract" : "Lower blocks from compile time to runtime",
    "author" : [
-      "Ben Morrow <ben@morrow.me.uk>"
+      "perlancar <perlancar@gmail.com>"
    ],
    "dynamic_config" : 1,
    "generated_by" : "Module::Build version 0.4224",
@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
    },
-   "name" : "B-Hooks-AtRuntime",
+   "name" : "B-Hooks-AtRuntime-Lite",
    "prereqs" : {
       "build" : {
          "requires" : {
@@ -30,30 +30,31 @@
       },
       "runtime" : {
          "requires" : {
-            "Exporter::Tiny" : "0",
-            "Filter::Util::Call" : "0",
-            "Sub::Name" : "0.05",
-            "parent" : "0",
-            "perl" : "5.008001"
+            "perl" : "5.012000"
+            "strict" : "0",
+            "warnings" : "0",
+            "Exporter" : "5.57",
+            "Sub::Name" : "0",
+            "XSLoader" : "0",
          }
       }
    },
    "provides" : {
-      "B::Hooks::AtRuntime" : {
-         "file" : "lib/B/Hooks/AtRuntime.pm",
+      "B::Hooks::AtRuntime::Lite" : {
+         "file" : "lib/B/Hooks/AtRuntime/Lite.pm",
          "version" : "6"
       }
    },
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://rt.cpan.org/Public/Dist/Display.html?Name=B-Hooks-AtRuntime"
+         "web" : "https://rt.cpan.org/Public/Dist/Display.html?Name=B-Hooks-AtRuntime-Lite"
       },
       "license" : [
          "http://opensource.org/licenses/bsd-license.php"
       ],
       "repository" : {
-         "url" : "http://github.com/mauzo/B-Hooks-AtRuntime"
+         "url" : "http://github.com/perlancar/B-Hooks-AtRuntime-Lite"
       }
    },
    "version" : "6"

@@ -1,6 +1,6 @@
 package t::D;
 
-use B::Hooks::AtRuntime qw/at_runtime after_runtime/;
+use B::Hooks::AtRuntime::Lite qw/at_runtime after_runtime/;
 #use Scalar::Util "weaken";
 #use Devel::FindRef;
 #use Devel::Peek;
@@ -19,7 +19,7 @@ sub import {
     $_[2] ? after_runtime { $d } : at_runtime { $d };
 }
 
-#sub dump_all { 
+#sub dump_all {
 #    for (@All) {
 #        ref or next;
 #        #Dump $$_;

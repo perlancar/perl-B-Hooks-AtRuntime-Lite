@@ -6,7 +6,7 @@ use warnings;
 
 use Test::More;
 
-use B::Hooks::AtRuntime qw/at_runtime lex_stuff/;
+use B::Hooks::AtRuntime::Lite qw/at_runtime lex_stuff/;
 
 {
     my @record;

@@ -8,13 +8,13 @@ use Test::More;
 use Test::Exception;
 use Test::Warn;
 
-use B::Hooks::AtRuntime qw/at_runtime after_runtime/;
+use B::Hooks::AtRuntime::Lite qw/at_runtime after_runtime/;
 
 {
     my @record;
     {
         push @record, 1;
-        BEGIN { 
+        BEGIN {
             after_runtime { push @record, 7 };
             at_runtime { push @record, 2 };
         }
@@ -29,7 +29,7 @@ use B::Hooks::AtRuntime qw/at_runtime after_runtime/;
 
 {
     package t::Caller;
-    use B::Hooks::AtRuntime qw/at_runtime after_runtime/;
+    use B::Hooks::AtRuntime::Lite qw/at_runtime after_runtime/;
     my ($at, $after);
 
     sub call_after {
@@ -37,7 +37,7 @@ use B::Hooks::AtRuntime qw/at_runtime after_runtime/;
         BEGIN { after_runtime { $after = caller } }
     }
 
-    sub check_caller { 
+    sub check_caller {
         BEGIN { at_runtime { $at = caller; } }
         call_after;
     }

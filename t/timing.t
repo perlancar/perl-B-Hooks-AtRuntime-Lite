@@ -9,7 +9,7 @@ use Test::Exception;
 use Test::Warn;
 use t::Util;
 
-use B::Hooks::AtRuntime;
+use B::Hooks::AtRuntime::Lite;
 use Sub::Name "subname";
 
 # this must come before evals_ok, otherwise the eval won't see the 'our'
@@ -43,7 +43,7 @@ throws_ok { at_runtime { 1 } }
 @Record = ();
 push @Record, 1;
 BEGIN { at_runtime { push @Record, 2 } }
-fakerequire "a_r", q{ 
+fakerequire "a_r", q{
     push @Record, 3;
     BEGIN { at_runtime { push @Record, 4 } }
     push @Record, 5;
@@ -80,7 +80,7 @@ is_deeply \@Record, [1..6], "2-deep BEGIN before 1-deep";
         at_runtime { push @record, "BEGIN AR 1" };
         BEGIN { at_runtime { push @record, "BEGIN BEGIN 1 AR" } }
 
-        *BEGIN = subname "BEGIN", sub { 
+        *BEGIN = subname "BEGIN", sub {
             at_runtime { push @record, "BEGIN &BEGIN AR" };
         };
         &BEGIN;
@@ -117,32 +117,10 @@ fakerequire "lines", q{
 is_deeply \@Record, [2,4], "at_runtime doesn't confuse line numbering";
 
 
-if (B::Hooks::AtRuntime::USE_FILTER) {
-    
-    evals_nok q{ BEGIN { at_runtime { 1 } } },
-        qr/^Can't use at_runtime from a string eval/,
-        "at_runtime in eval'' fails with USE_FILTER";
-
-    warning_is {
-        fakerequire "eol", q{ 
-            BEGIN { at_runtime { 1 } } 1;
-            1;
-        };
-    }   "Extra text '1;' after call to lex_stuff",
-        "at_runtime not at EOL warns";
-
-    warnings_are {
-        fakerequire "eolcomment", q{
-            BEGIN { at_runtime { 1 } }  	# foobar
-            1;
-        };
-    }   [],
-        "comments and whitespace before EOL ignored";
-}
-else {
+if (1) {
 
     @Record = ();
-    evals_ok q{ 
+    evals_ok q{
         push @Record, 1;
         BEGIN { at_runtime { push @Record, 2 } }
         push @Record, 3;

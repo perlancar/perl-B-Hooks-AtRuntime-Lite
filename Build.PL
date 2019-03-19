@@ -1,7 +1,7 @@
 use Module::Build;
 
 Module::Build->new(
-    module_name         => "B::Hooks::AtRuntime",
+    module_name         => "B::Hooks::AtRuntime::Lite",
     license             => "bsd",
 
     include_dirs        => ".",
@@ -16,18 +16,18 @@ Module::Build->new(
         "Test::Exports"     => "1",
     },
     requires            => {
-        perl                => "5.008001",
-        "Exporter::Tiny"    => 0,
-        "Sub::Name"         => "0.05",
-        "Filter::Util::Call"    => "0",
-        "parent"            => 0,
+        perl                => "5.012000",
+        #"strict"            => 0,
+        #"warnings"          => 0,
+        "Exporter"          => 5.57,
+        "XSLoader"          => 0,
     },
 
     meta_merge          => {
         resources => {
-            repository => "http://github.com/mauzo/B-Hooks-AtRuntime",
+            repository => "http://github.com/perlancar/perl-B-Hooks-AtRuntime-Lite",
             bugtracker => "https://rt.cpan.org/Public/Dist/" .
-                "Display.html?Name=B-Hooks-AtRuntime",
+                "Display.html?Name=B-Hooks-AtRuntime-Lite",
         },
     },
 )->create_build_script;

@@ -18,7 +18,7 @@ call_after (pTHX_ void *p)
     SvREFCNT_dec(cv);
 }
 
-MODULE = B::Hooks::AtRuntime  PACKAGE = B::Hooks::AtRuntime
+MODULE = B::Hooks::AtRuntime::Lite  PACKAGE = B::Hooks::AtRuntime::Lite
 
 #ifdef lex_stuff_sv
 

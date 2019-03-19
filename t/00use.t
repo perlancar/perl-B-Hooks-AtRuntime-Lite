@@ -7,7 +7,7 @@ use lib "tlib";
 use Test::More;
 use Test::Exports;
 
-my $BHAR = "B::Hooks::AtRuntime";
+my $BHAR = "B::Hooks::AtRuntime::Lite";
 
 require_ok $BHAR                or BAIL_OUT "can't load module";
 
@@ -22,14 +22,14 @@ new_import_pkg;
 import_ok $BHAR, \@all,         "explicit import OK";
 is_import @all, $BHAR,          "explicit import succeeds";
 
-is prototype(\&B::Hooks::AtRuntime::at_runtime), "&",
+is prototype(\&B::Hooks::AtRuntime::Lite::at_runtime), "&",
                                 "at_runtime has & prototype";
-is prototype(\&B::Hooks::AtRuntime::after_runtime), "&",
+is prototype(\&B::Hooks::AtRuntime::Lite::after_runtime), "&",
                                 "after_runtime has & prototype";
 
 new_import_pkg;
-import_ok $BHAR, [-all],        "-all import OK";
-is_import @all, $BHAR,          "-all import succeeds";
+import_ok $BHAR, [":all"],      ":all import OK";
+is_import @all, $BHAR,          ":all import succeeds";
 
 BAIL_OUT "Module will not load."
     if !Test::More->builder->is_passing;
